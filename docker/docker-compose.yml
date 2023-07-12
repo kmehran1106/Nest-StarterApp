@@ -4,13 +4,14 @@ services:
   app:
     container_name: nest-ping-api-app
     image: nestjs-dev
+    platform: linux/amd64
     build:
       context: ../
       dockerfile: ./docker/Dockerfile
       target: dev
     volumes:
       - ../:/usr/code/src
-      - /app/node_modules
+      - '/usr/code/src/node_modules'
     ports:
       - 3333:3333
     depends_on:

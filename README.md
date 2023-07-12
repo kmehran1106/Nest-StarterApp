@@ -70,7 +70,10 @@ $ docker compose logs -f app
 $ docker compose exec app npm run test
 
 # prisma
-$ 
+$ docker compose exec app npx prisma init
+$ docker compose exec app npx prisma migrate dev
+$ docker compose exec app npx prisma generate
+$ docker compose exec app npx prisma studio
 ```
 
 ## Support

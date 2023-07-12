@@ -34,7 +34,7 @@ describe('PingService', () => {
   describe('signup', () => {
     it('should work correctly for valid email and password', async () => {
       // Given
-      const dto = plainToInstance(SigninDto, {
+      const dto = plainToInstance(SignupDto, {
         email: 'valid@email.com',
         password: 'validPassword',
       });
