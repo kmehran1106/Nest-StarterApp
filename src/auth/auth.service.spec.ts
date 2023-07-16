@@ -1,17 +1,27 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
-import { SigninDto, SignupDto } from './dtos';
+import { SigninDto, SignupDto, SignupResponseDto } from './dtos';
 import { plainToInstance } from 'class-transformer';
+import { User } from '@prisma/client';
+import { PrismaModule } from '../prisma/prisma.module';
+import { PrismaService } from '../prisma/prisma.service';
+import { mockDeep, DeepMockProxy } from 'jest-mock-extended';
 
-describe('PingService', () => {
+describe('AuthService', () => {
   let authService: AuthService;
+  let prismaService: DeepMockProxy<PrismaService>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [AuthService],
-    }).compile();
+      imports: [PrismaModule],
+    })
+      .overrideProvider(PrismaService)
+      .useValue(mockDeep<PrismaService>())
+      .compile();
 
-    authService = module.get<AuthService>(AuthService);
+    authService = module.get(AuthService);
+    prismaService = module.get(PrismaService);
   });
 
   describe('signin', () => {
@@ -38,13 +48,30 @@ describe('PingService', () => {
         email: 'valid@email.com',
         password: 'validPassword',
       });
-      const expectedResult = { message: 'Signup!' };
+      const createdUser: User = {
+        id: 1,
+        email: dto.email,
+        password: 'hashedPassword',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        firstName: '',
+        lastName: '',
+      };
+      const expectedResult: SignupResponseDto = {
+        id: 1,
+        email: dto.email,
+      };
+      prismaService.user.create.mockResolvedValueOnce(createdUser);
 
       // When
-      const result = authService.signup(dto);
+      const result = await authService.signup(dto);
 
       // Then
-      expect(result).toStrictEqual(expectedResult);
+      expect(result).toMatchObject(expectedResult);
     });
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
   });
 });

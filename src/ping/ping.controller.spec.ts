@@ -12,8 +12,8 @@ describe('CatsController', () => {
       providers: [PingService],
     }).compile();
 
-    pingService = moduleRef.get<PingService>(PingService);
-    pingController = moduleRef.get<PingController>(PingController);
+    pingService = moduleRef.get(PingService);
+    pingController = moduleRef.get(PingController);
   });
 
   describe('getPing', () => {

@@ -1,9 +1,5 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
-export interface ResponseMessage {
-  message: string;
-}
-
 export class SigninDto {
   @IsEmail()
   @IsNotEmpty()
@@ -22,4 +18,13 @@ export class SignupDto {
   @IsString()
   @IsNotEmpty()
   password: string;
+}
+
+export interface ResponseMessage {
+  message: string;
+}
+
+export interface SignupResponseDto {
+  id: number;
+  email: string;
 }

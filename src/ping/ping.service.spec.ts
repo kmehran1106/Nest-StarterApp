@@ -9,7 +9,7 @@ describe('PingService', () => {
       providers: [PingService],
     }).compile();
 
-    pingService = module.get<PingService>(PingService);
+    pingService = module.get(PingService);
   });
 
   describe('getPing', () => {

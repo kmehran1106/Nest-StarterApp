@@ -2,7 +2,8 @@ import { Test } from '@nestjs/testing';
 import { plainToInstance } from 'class-transformer';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { SigninDto } from './dtos';
+import { SigninDto, SignupResponseDto } from './dtos';
+import { PrismaModule } from '../prisma/prisma.module';
 
 describe('CatsController', () => {
   let authController: AuthController;
@@ -12,9 +13,10 @@ describe('CatsController', () => {
     const moduleRef = await Test.createTestingModule({
       controllers: [AuthController],
       providers: [AuthService],
+      imports: [PrismaModule],
     }).compile();
-    authController = moduleRef.get<AuthController>(AuthController);
-    authService = moduleRef.get<AuthService>(AuthService);
+    authController = moduleRef.get(AuthController);
+    authService = moduleRef.get(AuthService);
   });
 
   describe('signin when body has valid dto', () => {
@@ -42,11 +44,14 @@ describe('CatsController', () => {
         email: 'valid@email.com',
         password: 'validPassword',
       });
-      const expectedResult = { message: 'Signup!' };
-      jest.spyOn(authService, 'signup').mockReturnValue(expectedResult);
+      const expectedResult: SignupResponseDto = {
+        id: 1,
+        email: dto.email,
+      };
+      jest.spyOn(authService, 'signup').mockResolvedValue(expectedResult);
 
       // When
-      const result = authController.signup(dto);
+      const result = await authController.signup(dto);
 
       // Then
       expect(result).toBe(expectedResult);

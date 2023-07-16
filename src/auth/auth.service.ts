@@ -1,6 +1,12 @@
-import { Injectable } from '@nestjs/common';
-import { ResponseMessage, SigninDto, SignupDto } from './dtos';
+import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  ResponseMessage,
+  SigninDto,
+  SignupDto,
+  SignupResponseDto,
+} from './dtos';
 import { PrismaService } from '../prisma/prisma.service';
+import { Prisma, User } from '@prisma/client';
 import * as argon from 'argon2';
 
 @Injectable()
@@ -12,10 +18,21 @@ export class AuthService {
     return { message: 'Signin!' };
   }
 
-  async signup(dto: SignupDto) {
+  async signup(dto: SignupDto): Promise<SignupResponseDto | undefined> {
+    console.log(dto);
     const hash = await argon.hash(dto.password);
-    const user = await this.prismaService.user.create({
-      data: { email: dto.email, password: hash },
-    });
+    try {
+      const user = await this.prismaService.user.create({
+        data: { email: dto.email, password: hash },
+      });
+      const response: SignupResponseDto = { id: user.id, email: user.email };
+      return response;
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2002') {
+          throw new ForbiddenException('Email already exists');
+        }
+      }
+    }
   }
 }
