@@ -2,10 +2,10 @@ import { Test } from '@nestjs/testing';
 import { plainToInstance } from 'class-transformer';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { SigninDto, SignupResponseDto } from './dtos';
+import { SigninDto, SigninResponseDto, SignupResponseDto } from './dtos';
 import { PrismaModule } from '../prisma/prisma.module';
 
-describe('CatsController', () => {
+describe('AuthController', () => {
   let authController: AuthController;
   let authService: AuthService;
 
@@ -26,11 +26,14 @@ describe('CatsController', () => {
         email: 'valid@email.com',
         password: 'validPassword',
       });
-      const expectedResult = { message: 'Signin!' };
-      jest.spyOn(authService, 'signin').mockReturnValue(expectedResult);
+      const expectedResult: SigninResponseDto = {
+        id: 1,
+        email: dto.email,
+      };
+      jest.spyOn(authService, 'signin').mockResolvedValue(expectedResult);
 
       // When
-      const result = authController.signin(dto);
+      const result = await authController.signin(dto);
 
       // Then
       expect(result).toBe(expectedResult);

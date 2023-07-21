@@ -28,3 +28,8 @@ export interface SignupResponseDto {
   id: number;
   email: string;
 }
+
+export interface SigninResponseDto {
+  id: number;
+  email: string;
+}

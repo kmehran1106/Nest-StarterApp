@@ -1,8 +1,8 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import {
-  ResponseMessage,
   SigninDto,
+  SigninResponseDto,
   SignupDto,
   SignupResponseDto,
 } from './dtos';
@@ -12,8 +12,8 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('signin')
-  signin(@Body() dto: SigninDto): ResponseMessage {
-    return this.authService.signin(dto);
+  async signin(@Body() dto: SigninDto): Promise<SigninResponseDto | undefined> {
+    return await this.authService.signin(dto);
   }
 
   @Post('signup')

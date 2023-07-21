@@ -2,7 +2,7 @@ import { Test } from '@nestjs/testing';
 import { PingController } from './ping.controller';
 import { PingService } from './ping.service';
 
-describe('CatsController', () => {
+describe('PingController', () => {
   let pingController: PingController;
   let pingService: PingService;
 
