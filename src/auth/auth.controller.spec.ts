@@ -3,7 +3,9 @@ import { plainToInstance } from 'class-transformer';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { SigninDto, SigninResponseDto, SignupResponseDto } from './dtos';
-import { PrismaModule } from '../prisma/prisma.module';
+import { ConfigService } from '@nestjs/config';
+import { PrismaService } from '../prisma/prisma.service';
+import { JwtService } from '@nestjs/jwt';
 
 describe('AuthController', () => {
   let authController: AuthController;
@@ -12,8 +14,7 @@ describe('AuthController', () => {
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       controllers: [AuthController],
-      providers: [AuthService],
-      imports: [PrismaModule],
+      providers: [PrismaService, AuthService, ConfigService, JwtService],
     }).compile();
     authController = moduleRef.get(AuthController);
     authService = moduleRef.get(AuthService);
@@ -27,8 +28,7 @@ describe('AuthController', () => {
         password: 'validPassword',
       });
       const expectedResult: SigninResponseDto = {
-        id: 1,
-        email: dto.email,
+        access_token: 'access_token',
       };
       jest.spyOn(authService, 'signin').mockResolvedValue(expectedResult);
 

@@ -30,6 +30,5 @@ export interface SignupResponseDto {
 }
 
 export interface SigninResponseDto {
-  id: number;
-  email: string;
+  access_token: string;
 }

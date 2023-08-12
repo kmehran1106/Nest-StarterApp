@@ -1,13 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BookmarksModule } from './bookmarks.module';
 
 describe('BookmarksModule', () => {
   let bookmarksModule: TestingModule;
 
   beforeAll(async () => {
-    bookmarksModule = await Test.createTestingModule({
-      imports: [BookmarksModule],
-    }).compile();
+    bookmarksModule = await Test.createTestingModule({}).compile();
   });
 
   afterAll(async () => {

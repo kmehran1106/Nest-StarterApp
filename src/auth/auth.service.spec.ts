@@ -8,10 +8,11 @@ import {
 } from './dtos';
 import { plainToInstance } from 'class-transformer';
 import { User } from '@prisma/client';
-import { PrismaModule } from '../prisma/prisma.module';
 import { PrismaService } from '../prisma/prisma.service';
 import { mockDeep, DeepMockProxy } from 'jest-mock-extended';
 import * as argon from 'argon2';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 
 describe('AuthService', () => {
   let authService: AuthService;
@@ -19,8 +20,7 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthService],
-      imports: [PrismaModule],
+      providers: [AuthService, PrismaService, ConfigService, JwtService],
     })
       .overrideProvider(PrismaService)
       .useValue(mockDeep<PrismaService>())
@@ -46,7 +46,9 @@ describe('AuthService', () => {
         firstName: '',
         lastName: '',
       };
-      const expectedResult: SigninResponseDto = { id: 1, email: dto.email };
+      const returnedToken = { access_token: 'access_token' };
+      jest.spyOn(authService, 'signToken').mockResolvedValue(returnedToken);
+      const expectedResult: SigninResponseDto = returnedToken;
       jest.spyOn(argon, 'verify').mockResolvedValueOnce(true);
       prismaService.user.findUnique.mockResolvedValueOnce(existingUser);
 

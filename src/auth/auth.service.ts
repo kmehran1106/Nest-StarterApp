@@ -8,10 +8,28 @@ import {
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma, User } from '@prisma/client';
 import * as argon from 'argon2';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(
+    private configService: ConfigService,
+    private prismaService: PrismaService,
+    private jwtService: JwtService,
+  ) {}
+
+  async signToken(
+    userId: number,
+    email: string,
+  ): Promise<{ access_token: string }> {
+    const payload = { sub: userId, email: email };
+    const token = await this.jwtService.signAsync(payload, {
+      expiresIn: '1h',
+      secret: this.configService.get('JWT_PRIVATE_KEY'),
+    });
+    return { access_token: token };
+  }
 
   async signin(dto: SigninDto): Promise<SigninResponseDto | undefined> {
     const user: User | null = await this.prismaService.user.findUnique({
@@ -22,8 +40,7 @@ export class AuthService {
     const isVerified = await argon.verify(user.password, dto.password);
     if (!isVerified) throw new ForbiddenException('Email or password is wrong');
 
-    const response: SigninResponseDto = { id: user.id, email: user.email };
-    return response;
+    return await this.signToken(user.id, user.email);
   }
 
   async signup(dto: SignupDto): Promise<SignupResponseDto | undefined> {

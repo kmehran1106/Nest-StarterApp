@@ -1,13 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PingModule } from './ping.module';
 
 describe('PingModule', () => {
   let pingModule: TestingModule;
 
   beforeAll(async () => {
-    pingModule = await Test.createTestingModule({
-      imports: [PingModule],
-    }).compile();
+    pingModule = await Test.createTestingModule({}).compile();
   });
 
   afterAll(async () => {

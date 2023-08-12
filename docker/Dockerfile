@@ -18,7 +18,7 @@ COPY . .
 RUN npm ci
 RUN npm run build && npm prune --production
 
-# PROD - SERVER
+# PROD - RUN
 FROM node:18-alpine as prod
 WORKDIR /usr/code/src
 RUN apk add --no-cache libc6-compat
