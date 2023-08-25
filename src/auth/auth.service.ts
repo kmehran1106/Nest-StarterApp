@@ -4,7 +4,7 @@ import {
   SignupDto,
   SignupResponseDto,
   SigninResponseDto,
-} from './dtos';
+} from './dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma, User } from '@prisma/client';
 import * as argon from 'argon2';
@@ -19,16 +19,10 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signToken(
-    userId: number,
-    email: string,
-  ): Promise<{ access_token: string }> {
+  async signToken(userId: number, email: string): Promise<SigninResponseDto> {
     const payload = { sub: userId, email: email };
-    const token = await this.jwtService.signAsync(payload, {
-      expiresIn: '1h',
-      secret: this.configService.get('JWT_PRIVATE_KEY'),
-    });
-    return { access_token: token };
+    const token = await this.jwtService.signAsync(payload);
+    return { access_token: token, refresh_token: '' };
   }
 
   async signin(dto: SigninDto): Promise<SigninResponseDto | undefined> {

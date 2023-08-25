@@ -2,7 +2,7 @@ import { Test } from '@nestjs/testing';
 import { plainToInstance } from 'class-transformer';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { SigninDto, SigninResponseDto, SignupResponseDto } from './dtos';
+import { SigninDto, SigninResponseDto, SignupResponseDto } from './dto';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
@@ -29,6 +29,7 @@ describe('AuthController', () => {
       });
       const expectedResult: SigninResponseDto = {
         access_token: 'access_token',
+        refresh_token: 'refresh_token',
       };
       jest.spyOn(authService, 'signin').mockResolvedValue(expectedResult);
 

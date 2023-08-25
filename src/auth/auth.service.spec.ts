@@ -5,7 +5,7 @@ import {
   SigninResponseDto,
   SignupDto,
   SignupResponseDto,
-} from './dtos';
+} from './dto';
 import { plainToInstance } from 'class-transformer';
 import { User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
@@ -46,7 +46,10 @@ describe('AuthService', () => {
         firstName: '',
         lastName: '',
       };
-      const returnedToken = { access_token: 'access_token' };
+      const returnedToken = {
+        access_token: 'access_token',
+        refresh_token: 'refresh_token',
+      };
       jest.spyOn(authService, 'signToken').mockResolvedValue(returnedToken);
       const expectedResult: SigninResponseDto = returnedToken;
       jest.spyOn(argon, 'verify').mockResolvedValueOnce(true);

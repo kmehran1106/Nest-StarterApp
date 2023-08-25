@@ -5,7 +5,7 @@ WORKDIR /usr/code/src
 ENV NODE_ENV dev
 RUN addgroup --system user && adduser --system user && chown -R user:user /usr/code && chmod -R 755 /usr/code
 COPY . .
-RUN npm ci && npx prisma generate
+RUN npm install && npx prisma generate
 
 # PROD - BUILD
 FROM node:18-alpine as build

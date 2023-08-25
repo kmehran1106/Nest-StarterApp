@@ -31,4 +31,5 @@ export interface SignupResponseDto {
 
 export interface SigninResponseDto {
   access_token: string;
+  refresh_token: string;
 }
