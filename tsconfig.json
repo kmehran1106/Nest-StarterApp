@@ -10,12 +10,19 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "paths": {
+      "auth/*": ["./src/auth/*"],
+      "bookmarks/*": ["./src/bookmarks/*"],
+      "users/*": ["./src/users/*"],
+      "prisma/*": ["./src/prisma/*"],
+      "ping/*": ["./src/ping/*"],
+    },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
   }
 }

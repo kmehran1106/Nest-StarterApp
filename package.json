@@ -81,6 +81,13 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^auth/(.*)$": "<rootDir>/auth/$1",
+      "^bookmarks/(.*)$": "<rootDir>/bookmarks/$1",
+      "^prisma/(.*)$": "<rootDir>/prisma/$1",
+      "^users/(.*)$": "<rootDir>/users/$1",
+      "^ping/(.*)$": "<rootDir>/ping/$1"
+    }
   }
 }

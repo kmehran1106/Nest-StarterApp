@@ -1,18 +1,13 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { AuthService } from './auth.service';
-import {
-  SigninDto,
-  SigninResponseDto,
-  SignupDto,
-  SignupResponseDto,
-} from './dto';
-import { plainToInstance } from 'class-transformer';
-import { User } from '@prisma/client';
-import { PrismaService } from '../prisma/prisma.service';
-import { mockDeep, DeepMockProxy } from 'jest-mock-extended';
 import * as argon from 'argon2';
+import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { User } from '@prisma/client';
+import { plainToInstance } from 'class-transformer';
+import { mockDeep, DeepMockProxy } from 'jest-mock-extended';
+import { PrismaService } from 'prisma/prisma.service';
+import { AuthService } from './auth.service';
+import { SigninDto, SigninResponseDto, SignupDto, SignupResponseDto } from './dto';
 
 describe('AuthService', () => {
   let authService: AuthService;

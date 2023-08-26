@@ -1,7 +1,7 @@
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
-import { PingModule } from '../../src/ping/ping.module';
-import { PingService } from '../../src/ping/ping.service';
+import { PingModule } from 'ping/ping.module';
+import { PingService } from 'ping/ping.service';
 import { INestApplication } from '@nestjs/common';
 
 describe('Cats', () => {
@@ -23,10 +23,7 @@ describe('Cats', () => {
   });
 
   it(`/GET ping`, () => {
-    return request(app.getHttpServer())
-      .get('/ping')
-      .expect(200)
-      .expect(pingService.getPing());
+    return request(app.getHttpServer()).get('/ping').expect(200).expect(pingService.getPing());
   });
 
   afterAll(async () => {
