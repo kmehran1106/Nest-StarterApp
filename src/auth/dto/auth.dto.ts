@@ -20,7 +20,12 @@ export class SignupDto {
   password: string;
 }
 
-export interface ResponseMessage {
+export interface RequestUserDto {
+  email: string;
+  id: number;
+}
+
+export interface ResponseMessageDto {
   message: string;
 }
 

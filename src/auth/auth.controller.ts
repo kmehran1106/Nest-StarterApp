@@ -1,6 +1,8 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { SigninDto, SigninResponseDto, SignupDto, SignupResponseDto } from './dto';
+import { SigninDto, SigninResponseDto, SignupDto, SignupResponseDto, ResponseMessageDto, RequestUserDto } from './dto';
+import { GetUser } from './decorator';
+import { JwtGuard } from './guard';
 
 @Controller('auth')
 export class AuthController {
@@ -16,5 +18,12 @@ export class AuthController {
   @Post('signup')
   async signup(@Body() dto: SignupDto): Promise<SignupResponseDto | undefined> {
     return await this.authService.signup(dto);
+  }
+
+  @UseGuards(JwtGuard)
+  @HttpCode(HttpStatus.OK)
+  @Post('signout')
+  async signout(@GetUser() user: RequestUserDto): Promise<ResponseMessageDto | undefined> {
+    return await this.authService.signout(user);
   }
 }

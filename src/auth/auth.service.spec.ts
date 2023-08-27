@@ -85,6 +85,20 @@ describe('AuthService', () => {
     });
   });
 
+  describe('signout', () => {
+    it('should work correctly for valid user', async () => {
+      // Given
+      const user = { id: 1, email: 'valid@user.com' };
+      const expectedResult = { message: `Successfully signed out for ${user.email}.` };
+
+      // When
+      const result = await authService.signout(user);
+
+      // Then
+      expect(result).toStrictEqual(expectedResult);
+    });
+  });
+
   afterEach(() => {
     jest.resetAllMocks();
   });

@@ -5,6 +5,7 @@ import { plainToInstance } from 'class-transformer';
 import { PrismaService } from 'prisma/prisma.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { JwtGuard } from './guard';
 import { SigninDto, SigninResponseDto, SignupResponseDto } from './dto';
 
 describe('AuthController', () => {
@@ -59,6 +60,30 @@ describe('AuthController', () => {
 
       // Then
       expect(result).toBe(expectedResult);
+    });
+  });
+
+  describe('signout when user is authenticated', () => {
+    it('should complete signout correctly', async () => {
+      // Given
+      const user = { id: 1, email: 'valid@user.com' };
+      const expectedResult = { message: `Successfully signed out for ${user.email}.` };
+      jest.spyOn(authService, 'signout').mockResolvedValue(expectedResult);
+
+      // When
+      const result = await authController.signout(user);
+
+      // Then
+      expect(result).toBe(expectedResult);
+    });
+  });
+
+  describe('jwt guard is applied on correct methods', () => {
+    it('should ensure the JwtAuthGuard is applied to the signout method', async () => {
+      const guards = Reflect.getMetadata('__guards__', AuthController.prototype.signout);
+      const guard = new guards[0]();
+
+      expect(guard).toBeInstanceOf(JwtGuard);
     });
   });
 });

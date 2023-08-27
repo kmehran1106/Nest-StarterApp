@@ -1,12 +1,13 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
+import { RequestUserDto } from 'auth/dto';
 import { GetUser } from 'auth/decorator';
 import { JwtGuard } from 'auth/guard';
 
+@UseGuards(JwtGuard)
 @Controller('users')
 export class UsersController {
-  @UseGuards(JwtGuard)
   @Get('me')
-  getMe(@GetUser() user: { email: string; id: number }) {
+  getMe(@GetUser() user: RequestUserDto) {
     return user;
   }
 }

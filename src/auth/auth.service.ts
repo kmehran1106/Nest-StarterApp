@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Prisma, User } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma.service';
-import { SigninDto, SignupDto, SignupResponseDto, SigninResponseDto } from './dto';
+import { SigninDto, SignupDto, SignupResponseDto, SigninResponseDto, ResponseMessageDto, RequestUserDto } from './dto';
 
 @Injectable()
 export class AuthService {
@@ -47,5 +47,9 @@ export class AuthService {
         }
       }
     }
+  }
+
+  async signout(user: RequestUserDto): Promise<ResponseMessageDto | undefined> {
+    return { message: `Successfully signed out for ${user.email}.` };
   }
 }
