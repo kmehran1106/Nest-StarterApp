@@ -13,10 +13,11 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,tests}/**/*.ts\" --fix",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:e2e": "jest --config ./tests/jest-e2e.json",
+    "test:unit": "dotenv -e .env.test -- jest",
+    "test:unit:watch": "dotenv -e .env.test -- jest --watch",
+    "test:unit:cov": "dotenv -e .env.test -- jest --coverage",
+    "test:e2e": "dotenv -e .env.test -- prisma migrate dev && jest --no-cache --config ./tests/jest-e2e.json",
+    "test:e2e:watch": "dotenv -e .env.test -- prisma migrate dev && jest --watch --no-cache --config ./tests/jest-e2e.json",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
   "dependencies": {
@@ -30,6 +31,7 @@
     "argon2": "^0.30.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "dotenv-cli": "^7.3.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
@@ -54,6 +56,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "jest": "^29.5.0",
     "jest-mock-extended": "^3.0.4",
+    "pactum": "^3.5.0",
     "prettier": "^2.8.8",
     "run-script-webpack-plugin": "^0.2.0",
     "source-map-support": "^0.5.21",
@@ -72,7 +75,6 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
@@ -83,11 +85,12 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
     "moduleNameMapper": {
-      "^auth/(.*)$": "<rootDir>/auth/$1",
-      "^bookmarks/(.*)$": "<rootDir>/bookmarks/$1",
-      "^prisma/(.*)$": "<rootDir>/prisma/$1",
-      "^users/(.*)$": "<rootDir>/users/$1",
-      "^ping/(.*)$": "<rootDir>/ping/$1"
+      "^src/(.*)$": "<rootDir>/src/$1",
+      "^auth/(.*)$": "<rootDir>/src/auth/$1",
+      "^bookmarks/(.*)$": "<rootDir>/src/bookmarks/$1",
+      "^prisma/(.*)$": "<rootDir>/src/prisma/$1",
+      "^users/(.*)$": "<rootDir>/src/users/$1",
+      "^ping/(.*)$": "<rootDir>/src/ping/$1"
     }
   }
 }

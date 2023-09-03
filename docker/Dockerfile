@@ -7,6 +7,15 @@ RUN addgroup --system user && adduser --system user && chown -R user:user /usr/c
 COPY . .
 RUN npm install && npx prisma generate
 
+# TEST
+FROM node:18-alpine as test
+RUN apk add --no-cache libc6-compat
+WORKDIR /usr/code/src
+ENV NODE_ENV test
+RUN addgroup --system user && adduser --system user && chown -R user:user /usr/code && chmod -R 755 /usr/code
+COPY . .
+RUN npm install && npx prisma generate
+
 # PROD - BUILD
 FROM node:18-alpine as build
 WORKDIR /usr/code/src

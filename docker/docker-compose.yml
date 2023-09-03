@@ -33,5 +33,32 @@ services:
     ports:
       - 5833:5432
 
+  testenv:
+    container_name: nest-ping-api-testenv
+    image: nestjs-testenv
+    platform: linux/amd64
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+      target: test
+    volumes:
+      - ../:/usr/code/src
+      - '/usr/code/src/node_modules'
+    depends_on:
+      - test-db
+    command: sleep inf
+
+  test-db:
+    image: postgres:15-alpine
+    container_name: nest-ping-api-test-db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=user_node
+      - POSTGRES_PASSWORD=password_node
+      - POSTGRES_DB=db_node
+    ports:
+      - 5933:5432
+
 volumes:
   postgres_data: {}
