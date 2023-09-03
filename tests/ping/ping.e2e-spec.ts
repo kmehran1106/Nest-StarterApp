@@ -28,5 +28,6 @@ describe('App End to End', () => {
     app.close();
   });
 
+  // describe('Ping', () => {});
   it.todo('should pass');
 });

@@ -3,10 +3,10 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { plainToInstance } from 'class-transformer';
 import { PrismaService } from 'prisma/prisma.service';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-import { JwtGuard } from './guard';
-import { SigninDto, SigninResponseDto, SignupResponseDto } from './dto';
+import { AuthController } from 'auth/auth.controller';
+import { AuthService } from 'auth/auth.service';
+import { JwtGuard } from 'auth/guard';
+import { SigninDto, SigninResponseDto, SignupResponseDto } from 'auth/dto';
 
 describe('AuthController', () => {
   let authController: AuthController;

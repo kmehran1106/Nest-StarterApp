@@ -6,8 +6,8 @@ import { User } from '@prisma/client';
 import { plainToInstance } from 'class-transformer';
 import { mockDeep, DeepMockProxy } from 'jest-mock-extended';
 import { PrismaService } from 'prisma/prisma.service';
-import { AuthService } from './auth.service';
-import { SigninDto, SigninResponseDto, SignupDto, SignupResponseDto } from './dto';
+import { AuthService } from 'auth/auth.service';
+import { SigninDto, SigninResponseDto, SignupDto, SignupResponseDto } from 'auth/dto';
 
 describe('AuthService', () => {
   let authService: AuthService;

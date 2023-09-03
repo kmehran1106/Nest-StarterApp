@@ -28,5 +28,6 @@ describe('App End to End', () => {
     app.close();
   });
 
+  // describe('Bookmarks', () => {});
   it.todo('should pass');
 });

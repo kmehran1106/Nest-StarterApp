@@ -9,6 +9,8 @@ services:
       context: ../
       dockerfile: ./docker/Dockerfile
       target: dev
+    environment:
+      - NODE_ENV=dev
     volumes:
       - ../:/usr/code/src
       - '/usr/code/src/node_modules'
@@ -41,6 +43,8 @@ services:
       context: ../
       dockerfile: ./docker/Dockerfile
       target: test
+    environment:
+      - NODE_ENV=test
     volumes:
       - ../:/usr/code/src
       - '/usr/code/src/node_modules'

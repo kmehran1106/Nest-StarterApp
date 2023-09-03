@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BookmarksService } from './bookmarks.service';
+import { BookmarksService } from 'bookmarks/bookmarks.service';
 
 describe('BookmarksService', () => {
   let service: BookmarksService;
