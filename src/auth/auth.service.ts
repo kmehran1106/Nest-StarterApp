@@ -1,6 +1,5 @@
 import * as argon from 'argon2';
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Prisma, User } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma.service';
@@ -8,11 +7,7 @@ import { SigninDto, SignupDto, SignupResponseDto, SigninResponseDto, ResponseMes
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private configService: ConfigService,
-    private prismaService: PrismaService,
-    private jwtService: JwtService,
-  ) {}
+  constructor(private prismaService: PrismaService, private jwtService: JwtService) {}
 
   async signToken(userId: number, email: string): Promise<SigninResponseDto> {
     const payload = { sub: userId, email: email };
@@ -20,8 +15,52 @@ export class AuthService {
     return { access_token: token, refresh_token: '' };
   }
 
+  async getUserFromId(userId: number): Promise<User | null> {
+    return await this.prismaService.user.findUnique({ where: { id: userId } });
+  }
+
   async signin(dto: SigninDto): Promise<SigninResponseDto | undefined> {
-    const user: User | null = await this.prismaService.user.findUnique({
+    let user: User | null;
+    user = await this.prismaService.user.findUnique({
+      where: { email: dto.email },
+    });
+    user = await this.prismaService.user.findUnique({
+      where: { email: dto.email },
+    });
+    user = await this.prismaService.user.findUnique({
+      where: { email: dto.email },
+    });
+    user = await this.prismaService.user.findUnique({
+      where: { email: dto.email },
+    });
+    user = await this.prismaService.user.findUnique({
+      where: { email: dto.email },
+    });
+    user = await this.prismaService.user.findUnique({
+      where: { email: dto.email },
+    });
+    user = await this.prismaService.user.findUnique({
+      where: { email: dto.email },
+    });
+    user = await this.prismaService.user.findUnique({
+      where: { email: dto.email },
+    });
+    user = await this.prismaService.user.findUnique({
+      where: { email: dto.email },
+    });
+    user = await this.prismaService.user.findUnique({
+      where: { email: dto.email },
+    });
+    user = await this.prismaService.user.findUnique({
+      where: { email: dto.email },
+    });
+    user = await this.prismaService.user.findUnique({
+      where: { email: dto.email },
+    });
+    user = await this.prismaService.user.findUnique({
+      where: { email: dto.email },
+    });
+    user = await this.prismaService.user.findUnique({
       where: { email: dto.email },
     });
     if (!user) throw new ForbiddenException('Email or password is wrong');
@@ -29,7 +68,8 @@ export class AuthService {
     const isVerified = await argon.verify(user.password, dto.password);
     if (!isVerified) throw new ForbiddenException('Email or password is wrong');
 
-    return await this.signToken(user.id, user.email);
+    const response = await this.signToken(user.id, user.email);
+    return response;
   }
 
   async signup(dto: SignupDto): Promise<SignupResponseDto | undefined> {

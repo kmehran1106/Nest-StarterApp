@@ -16,8 +16,10 @@
     "test:unit": "dotenv -e .env.test -- jest",
     "test:unit:watch": "dotenv -e .env.test -- jest --watch",
     "test:unit:cov": "dotenv -e .env.test -- jest --coverage --collectCoverageFrom=src/**",
-    "test:e2e": "dotenv -e .env.test -- prisma migrate dev && jest --no-cache --config ./tests/jest-e2e.json",
-    "test:e2e:watch": "dotenv -e .env.test -- prisma migrate dev && jest --watch --no-cache --config ./tests/jest-e2e.json",
+    "pretest:e2e": "dotenv -e .env.test -- prisma migrate dev",
+    "test:e2e": "jest --no-cache --runInBand --config ./tests/jest-e2e.json",
+    "pretest:e2e:watch": "dotenv -e .env.test -- prisma migrate dev",
+    "test:e2e:watch": "jest --watchAll --runInBand --no-cache --config ./tests/jest-e2e.json",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
   "dependencies": {

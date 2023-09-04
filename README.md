@@ -28,7 +28,7 @@ $ docker compose logs -f app                          # this will show the logs 
 $ docker compose exec app npx prisma init             # only needs to be done once
 $ docker compose exec app npx prisma migrate dev      # resets db and migrates everything
 $ docker compose exec app npx prisma migrate deploy   # migrates changes to schema to db
-$ docker compose exec app npx prisma generate         # run after modifying schema and migrating
+$ docker compose exec app npx prisma generate         # generates schema objects for use by modules
 $ docker compose exec app npx prisma studio           # database visualizer (not needed)
 
 # others
