@@ -20,47 +20,7 @@ export class AuthService {
   }
 
   async signin(dto: SigninDto): Promise<SigninResponseDto | undefined> {
-    let user: User | null;
-    user = await this.prismaService.user.findUnique({
-      where: { email: dto.email },
-    });
-    user = await this.prismaService.user.findUnique({
-      where: { email: dto.email },
-    });
-    user = await this.prismaService.user.findUnique({
-      where: { email: dto.email },
-    });
-    user = await this.prismaService.user.findUnique({
-      where: { email: dto.email },
-    });
-    user = await this.prismaService.user.findUnique({
-      where: { email: dto.email },
-    });
-    user = await this.prismaService.user.findUnique({
-      where: { email: dto.email },
-    });
-    user = await this.prismaService.user.findUnique({
-      where: { email: dto.email },
-    });
-    user = await this.prismaService.user.findUnique({
-      where: { email: dto.email },
-    });
-    user = await this.prismaService.user.findUnique({
-      where: { email: dto.email },
-    });
-    user = await this.prismaService.user.findUnique({
-      where: { email: dto.email },
-    });
-    user = await this.prismaService.user.findUnique({
-      where: { email: dto.email },
-    });
-    user = await this.prismaService.user.findUnique({
-      where: { email: dto.email },
-    });
-    user = await this.prismaService.user.findUnique({
-      where: { email: dto.email },
-    });
-    user = await this.prismaService.user.findUnique({
+    const user = await this.prismaService.user.findUnique({
       where: { email: dto.email },
     });
     if (!user) throw new ForbiddenException('Email or password is wrong');

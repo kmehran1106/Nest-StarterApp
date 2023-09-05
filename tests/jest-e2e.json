@@ -10,9 +10,7 @@
   "moduleNameMapper": {
     "^src/(.*)$": "<rootDir>/src/$1",
     "^auth/(.*)$": "<rootDir>/src/auth/$1",
-    "^bookmarks/(.*)$": "<rootDir>/src/bookmarks/$1",
     "^prisma/(.*)$": "<rootDir>/src/prisma/$1",
-    "^users/(.*)$": "<rootDir>/src/users/$1",
     "^ping/(.*)$": "<rootDir>/src/ping/$1"
   }
 }

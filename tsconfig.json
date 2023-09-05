@@ -13,8 +13,6 @@
     "paths": {
       "src/*": ["./src/*"],
       "auth/*": ["./src/auth/*"],
-      "bookmarks/*": ["./src/bookmarks/*"],
-      "users/*": ["./src/users/*"],
       "prisma/*": ["./src/prisma/*"],
       "ping/*": ["./src/ping/*"],
     },
